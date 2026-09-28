@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design × AI — Visual Learning Diary</title>
+<style>
+  :root{
+    --paper:#ede8da;
+    --paper2:#f6f1e5;
+    --red:#b92518;
+    --ink:#151515;
+    --muted:#756f66;
+    --line:#b9b0a3;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:#d7d3ca;
+    color:var(--ink);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .page{
+    width:min(1180px, calc(100vw - 28px));
+    margin:18px auto;
+    background:var(--paper);
+    min-height:100vh;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+    overflow:hidden;
+    border:1px solid rgba(0,0,0,.08);
+  }
+
+  .hero{
+    position:relative;
+    padding:36px 44px 28px;
+    min-height:360px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+
+  h1{
+    margin:0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight:400;
+    font-size:clamp(58px, 8.5vw, 126px);
+    line-height:.78;
+    letter-spacing:-.055em;
+    max-width:900px;
+    position:relative;
+    z-index:3;
+  }
+
+  h1 .red{color:var(--red);}
+  .zh{
+    position:absolute;
+    left:44px;
+    top:118px;
+    z-index:4;
+    font-family:"Noto Serif SC","Songti SC","STSong",serif;
+    font-size:clamp(34px,4.6vw,67px);
+    letter-spacing:-.04em;
+    line-height:.95;
+  }
+
+  .red-block{
+    position:absolute;
+    right:0;
+    bottom:0;
+    width:72%;
+    height:43%;
+    background:var(--red);
+    clip-path:polygon(0 28%, 18% 28%, 18% 0, 43% 0, 43% 18%, 62% 18%, 62% 0, 82% 0, 82% 34%, 100% 34%, 100% 100%, 0 100%);
+  }
+
+  .hero-note{
+    position:absolute;
+    right:42px;
+    top:44px;
+    width:220px;
+    font-family:Georgia, "Times New Roman", serif;
+    font-size:13px;
+    line-height:1.25;
+    text-transform:uppercase;
+    z-index:5;
+    text-align:center;
+  }
+
+  .rings{
+    margin:14px auto 0;
+    width:130px;
+    height:70px;
+    position:relative;
+  }
+  .rings span{
+    position:absolute;
+    left:0; right:0;
+    margin:auto;
+    border:1px solid var(--ink);
+    border-radius:50%;
+    width:120px;
+    height:24px;
+    opacity:.65;
+  }
+  .rings span:nth-child(1){top:0;}
+  .rings span:nth-child(2){top:13px;}
+  .rings span:nth-child(3){top:26px;}
+  .rings span:nth-child(4){top:39px;}
+
+  .content{
+    padding:48px 44px 50px;
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap:46px;
+  }
+
+  .story{
+    font-family:Georgia, "Times New Roman", serif;
+    font-size:21px;
+    line-height:1.6;
+  }
+  .story p{
+    margin:0 0 24px;
+  }
+
+  .story .dropcap:first-letter{
+    float:left;
+    font-size:82px;
+    line-height:.78;
+    color:var(--red);
+    padding-right:10px;
+    padding-top:9px;
+  }
+
+  .highlight{
+    background:linear-gradient(transparent 62%, rgba(185,37,24,.18) 62%);
+  }
+
+  .quote{
+    margin:34px 0;
+    padding:22px 0 18px;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    font-family:Georgia, "Times New Roman", serif;
+    font-size:clamp(31px,4vw,55px);
+    line-height:1.02;
+    letter-spacing:-.03em;
+  }
+  .quote .red{color:var(--red);}
+
+  .side{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+
+  .card{
+    border-top:1px solid var(--ink);
+    padding-top:10px;
+  }
+
+  .card h2{
+    margin:0 0 12px;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:38px;
+    font-weight:400;
+    line-height:.95;
+    letter-spacing:-.03em;
+  }
+
+  .card p{
+    margin:0;
+    font-size:14px;
+    line-height:1.55;
+  }
+
+  .tag{
+    display:inline-block;
+    border:1px solid var(--ink);
+    border-radius:100px;
+    padding:6px 11px 5px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    margin:4px 4px 0 0;
+  }
+
+  .red-panel{
+    background:var(--red);
+    color:var(--paper2);
+    padding:24px;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .red-panel .big{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:42px;
+    line-height:.95;
+    letter-spacing:-.03em;
+  }
+  .red-panel .small{
+    font-size:12px;
+    line-height:1.45;
+    max-width:85%;
+  }
+
+  .split{
+    margin:0 44px 44px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  .split .box{
+    min-height:220px;
+    padding:22px;
+    border:1px solid var(--ink);
+    position:relative;
+  }
+
+  .split .box h3{
+    margin:0 0 18px;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:34px;
+    font-weight:400;
+  }
+
+  .split .box p{
+    font-size:14px;
+    line-height:1.6;
+    margin:0;
+  }
+
+  .split .box.ai{
+    background:var(--paper2);
+  }
+
+  .split .box.human{
+    background:var(--red);
+    color:var(--paper2);
+    border-color:var(--red);
+  }
+
+  .footer{
+    padding:16px 44px 22px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:.03em;
+  }
+
+  @media (max-width: 800px){
+    .hero{padding:28px 24px 24px; min-height:320px;}
+    .zh{left:24px; top:112px;}
+    .hero-note{display:none;}
+    .content{grid-template-columns:1fr; padding:34px 24px;}
+    .split{grid-template-columns:1fr; margin:0 24px 28px;}
+    .footer{padding:14px 24px 20px; flex-direction:column;}
+    .red-block{width:90%; height:38%;}
+  }
+</style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">VLD2 · Design × AI · Week 6</div>
+      <h1><span class="red">Design</span> × AI<br>as a collaborator</h1>
+      
+      <div class="hero-note">
+        Human judgement<br>still matters
+        <div class="rings"><span></span><span></span><span></span><span></span></div>
+      </div>
+
+      <div class="red-block"></div>
+    </section>
+
+    <section class="content">
+      <article class="story">
+        <p class="dropcap">I use AI most often when my thoughts are messy. I may have many notes, interview quotes, observations, and different ideas at the same time. AI helps me put them together, see possible links, and explain what I am thinking more clearly. That is why I see AI as a <span class="highlight">collaborator</span>. It works with me, but it should not make the final decision for me.</p>
+
+        <p>A good example is our Yusof Ishak House project at NUS. At the beginning, we found something strange: many students said YIH was too hot, but there were also air-conditioned rooms in the building, and some of them were empty. If I ask AI why students do not use these spaces, it can quickly give many reasonable answers. Maybe students do not know the rooms exist. Maybe the rules are unclear. Maybe the spaces do not feel welcoming. Maybe students simply prefer somewhere else.</p>
+
+        <p>These answers are useful because they give us ideas to check. But they are still only guesses. They can sound smart without being true.</p>
+
+        <div class="quote">“I didn’t know I was <span class="red">allowed</span> to go in.”</div>
+
+        <p>This sentence came from a real student interview, and it changed our whole way of looking at the problem. Before that, we were asking, “Why don’t students like YIH?” After the interview, the question became, “Do students even know that they are allowed to use these spaces?”</p>
+
+        <p>Later, we found more differences between different groups. Some student clubs had their own air-conditioned rooms, while ordinary students were often not sure which rooms they could enter or book. That kind of detail came from real people and real situations. AI could help us organise it, but it could not discover it for us.</p>
+
+        <p>This made me realise that AI is very good at creating a possible explanation based on patterns it already knows. It can help me compare ideas, find patterns, or question my framing. But real people give something different: experience, emotion, context, and surprises.</p>
+
+        <p>So I would never let AI handle user insight, final judgement, ethical decisions, or emotional understanding by itself. The same is true for desk research. If AI gives me a market number, research result, or case study, I still need the original source. I only use the information after I check the evidence myself.</p>
+
+        <p>For me, the rule is simple: <span class="highlight">AI can help me understand evidence, but it should not decide what counts as evidence.</span> It is useful because it helps me think faster and more clearly. But understanding the real world still needs observation, interviews, direct evidence, and human judgement.</p>
+      </article>
+
+      <aside class="side">
+        <div class="red-panel">
+          <div class="big">AI helps me make sense of things.</div>
+          <div class="small">It can organise, compare, question and expand ideas — but it should not replace direct evidence.</div>
+        </div>
+
+        <div class="card">
+          <h2>My role for AI</h2>
+          <span class="tag">Collaborator</span>
+          <span class="tag">Thinking partner</span>
+          <span class="tag">Organiser</span>
+          <span class="tag">Challenger</span>
+        </div>
+
+        <div class="card">
+          <h2>What AI cannot own</h2>
+          <p>User insight, final judgement, ethical decisions, emotional understanding, and the final check on whether information is trustworthy.</p>
+        </div>
+
+        <div class="card">
+          <h2>One rule</h2>
+          <p><strong>Reasonable is not the same as real.</strong><br>AI can give a plausible answer. Research still needs evidence.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="split">
+      <div class="box ai">
+        <h3>AI gives me</h3>
+        <p>possible explanations, quick structure, patterns, comparisons, clearer wording, and questions I can test.</p>
+      </div>
+      <div class="box human">
+        <h3>Real people give me</h3>
+        <p>lived experience, emotion, context, contradictions, and unexpected insights that can change the direction of the project.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>AI use declaration: ChatGPT was used to help organise ideas, refine English wording, and support the visual layout. Final arguments and decisions are my own.</div>
+      <div>Website visuals generated by AI.</div>
+    </footer>
+  </main>
+</body>
+</html>
+
+
