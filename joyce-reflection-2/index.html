@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reflection on what designers add when a technical system already works.">
+  <title>Why Does the World Need Designers?</title>
+  <style>
+    :root {
+      --sky: #dcecf4;
+      --paper: #f7faf8;
+      --ink: #111412;
+      --muted: #526066;
+      --accent: #f0440b;
+      --lime: #d8ef20;
+      --line: rgba(17, 20, 18, 0.2);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image:
+        radial-gradient(circle at 20% 30%, var(--ink) 0 0.6px, transparent 0.8px),
+        radial-gradient(circle at 70% 80%, var(--ink) 0 0.5px, transparent 0.75px);
+      background-size: 5px 5px, 7px 7px;
+      mix-blend-mode: multiply;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+
+    .shell {
+      width: min(var(--max), calc(100% - 32px));
+      margin-inline: auto;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      background: rgba(247, 250, 248, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .brand {
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      text-decoration: none;
+    }
+    .nav-link, .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+    .nav-link:hover, .button:hover { background: var(--accent); color: #fff; }
+    .nav-link:active, .button:active { transform: translateY(1px); }
+    .hero-copy > .button { margin-top: 24px; }
+
+    .hero {
+      position: relative;
+      min-height: calc(100dvh - 68px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      background-color: var(--sky);
+      background-image:
+        linear-gradient(rgba(17,20,18,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,20,18,0.06) 1px, transparent 1px);
+      background-size: 22px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      width: min(860px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: clamp(52px, 8vw, 92px) 0 0;
+      text-align: center;
+    }
+    .kicker {
+      margin: 0 0 20px;
+      font-family: "Courier New", monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.45rem, 7vw, 5.9rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+      font-weight: 950;
+    }
+    .highlight {
+      display: inline;
+      padding: 0.02em 0.1em 0.08em;
+      color: #fff;
+      background: var(--accent);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .hero-art {
+      align-self: end;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 6 / 1;
+      margin-top: 22px;
+      filter: saturate(0.98) contrast(1.05);
+      transform-origin: center bottom;
+      animation: rise 700ms cubic-bezier(.16,1,.3,1) both;
+    }
+
+    .article { background: var(--paper); }
+    .section {
+      padding: clamp(64px, 9vw, 120px) clamp(22px, 6vw, 84px);
+      border-bottom: 1px solid var(--line);
+    }
+    .section-inner { max-width: 920px; margin-inline: auto; }
+    .section h2 {
+      max-width: 760px;
+      margin: 0 0 28px;
+      font-size: clamp(2rem, 5vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+    }
+    .section h2.section-kicker {
+      margin-bottom: 24px;
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 850;
+    }
+    .section p {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font-size: clamp(1.06rem, 1.5vw, 1.22rem);
+    }
+    .section p:last-child { margin-bottom: 0; }
+    .dropcap::first-letter {
+      float: left;
+      margin: 0.12em 0.12em 0 0;
+      color: var(--accent);
+      font-size: 5.4rem;
+      font-weight: 950;
+      line-height: 0.72;
+    }
+
+    .two-part {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: clamp(42px, 8vw, 110px);
+      align-items: start;
+    }
+    .side-title {
+      position: sticky;
+      top: 100px;
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 42px;
+      border-top: 2px solid var(--ink);
+      border-left: 2px solid var(--ink);
+    }
+    .model-item {
+      min-height: 180px;
+      padding: 26px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .model-item:nth-child(2) { background: var(--sky); }
+    .model-item:nth-child(3) { background: var(--lime); }
+    .model-item:nth-child(4) { background: var(--accent); color: #fff; }
+    .model-item strong {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 1.4rem;
+      line-height: 1.1;
+    }
+
+    .closing {
+      min-height: 78vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(64px, 10vw, 130px) 24px;
+      text-align: center;
+      background: var(--sky);
+      border-bottom: 1px solid var(--line);
+    }
+    .closing p {
+      max-width: 950px;
+      margin: 0;
+      font-size: clamp(2rem, 5.5vw, 5rem);
+      font-weight: 950;
+      line-height: 1.03;
+      letter-spacing: -0.055em;
+    }
+    .closing mark {
+      color: #fff;
+      background: var(--accent);
+      padding: 0 0.08em 0.05em;
+    }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px;
+      font-family: "Courier New", monospace;
+      font-size: 0.76rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .reveal { opacity: 0; transform: translateY(18px); }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 420ms ease, transform 420ms cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(34px) scale(1.02); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: 100%; border: 0; }
+      .nav { padding-inline: 16px; }
+      .brand { max-width: 180px; line-height: 1.05; }
+      .hero { min-height: 760px; }
+      .hero-copy { width: calc(100% - 32px); padding-top: 52px; }
+      h1 { font-size: clamp(2.55rem, 13vw, 4.4rem); }
+      .hero-art { width: 150%; max-width: none; margin-left: -25%; }
+      .two-part { grid-template-columns: 1fr; gap: 30px; }
+      .side-title { position: static; }
+      .model-grid { grid-template-columns: 1fr; }
+      .model-item { min-height: auto; }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-art, .reveal { animation: none; opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top">Why Designers?</a>
+      <a class="nav-link" href="#reflection">Read the reflection</a>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="hero-copy">
+        <p class="kicker">Design Method</p>
+        <h1><span class="highlight">Why does the world</span><br><span class="highlight">need designers?</span></h1>
+        <a class="button" href="#reflection">Start reading</a>
+      </div>
+      <img class="hero-art" src="assets/designed-landscape.png" width="2172" height="724" alt="Pixel-print landscape where buildings, paths, and mountain forms merge together">
+    </header>
+
+    <main class="article" id="reflection">
+      <section class="section">
+        <div class="section-inner reveal">
+          <h2>The question followed me into my master’s degree.</h2>
+          <p class="dropcap">Since I started my master’s degree, I have often asked myself one question: what is special about a designer? Why does the world need designers? Why do companies need them?</p>
+          <p>This question is not easy to answer. Many people solve problems in their jobs. Engineers, businesspeople, scientists, and managers all solve problems. They talk to people, make decisions, and create new things. If I only say that designers are creative problem-solvers, it does not explain what makes design different.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Conversation with an engineer">
+        <div class="section-inner reveal">
+          <h2 class="section-kicker">A conversation</h2>
+          <p>An engineer once asked me, “What is an integrated designer?” He wanted a clear answer, not a broad promise.</p>
+          <p>I used my current green-building project to explain what I meant. I said, “You design a better energy system. I design a better way of living around it.”</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner reveal">
+          <h2>Then he asked how I could prove it.</h2>
+          <p>He replied, “So is design just general problem-solving? It sounds very abstract. How can you measure the relationship between people and a building?”</p>
+          <p>I was stuck. I believed that the relationship was real and important. But I could not explain how we could see it, test it, or improve it. My answer was too simple. I had said that engineers focus on energy while designers focus on people.</p>
+          <p>After thinking about it again, I saw that this was not fair. Engineers also care about people. Designers also need to understand technology, money, materials, and systems.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="two-part">
+          <h2 class="side-title reveal">The difference may be how we connect the whole situation.</h2>
+          <div class="reveal">
+            <p>A green building is not only an energy machine. It is also a place where people work, study, rest, and meet. At the same time, engineers do not only care about machines. They also think about safety, comfort, cost, and the people who use the building.</p>
+            <p>Design class helped me find a more exact answer. We learned about designerly ways of knowing. Design does not have only one subject. Designers may work with buildings, services, products, software, organisations, or public systems.</p>
+            <p>What makes design different is also how designers work. They make models of possible situations. They bring different kinds of knowledge together. They turn ideas into something people can see, use, discuss, and change.</p>
+            <div class="model-grid" aria-label="Four parts of the design situation">
+              <div class="model-item"><strong>People</strong><span>Daily habits, comfort, trust, and control.</span></div>
+              <div class="model-item"><strong>Technology</strong><span>Energy systems, tools, limits, and performance.</span></div>
+              <div class="model-item"><strong>Space</strong><span>Where actions happen and relationships form.</span></div>
+              <div class="model-item"><strong>Time</strong><span>How a system changes after people begin to live with it.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner reveal">
+          <h2>A building starts another life when people enter it.</h2>
+          <p>When engineers finish installing an energy system, real people begin to use the building every day. They may not use it in the way the technical team expected. They may misunderstand the system, ignore it, resist it, or find their own way to use it.</p>
+          <p>The building may save energy according to the technical data, but people may still feel hot, confused, or unable to control their environment. The system may work well on paper but not work well in daily life.</p>
+          <p>This is where a designer can help. Experience does not need to be only a soft or unclear feeling. We can collect evidence about it and connect that evidence with technical information.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner reveal">
+          <h2>A good designer does not pretend to know.</h2>
+          <p>A good designer should not speak for people without evidence. Designers can make wrong guesses. They need to listen, observe, test, and change their ideas.</p>
+          <p>This may also explain why companies need designers. A product or system may work well from a technical view but still fail in the real world. People may not understand it, trust it, or know how to use it. It may not fit into daily life.</p>
+          <p>Still, not every problem needs a designer. A designer creates value when they help a team find the right problem before building the wrong answer. They connect information that was separated before and make hidden problems easier to see.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner reveal">
+          <h2>What I would tell the engineer now.</h2>
+          <p>“An integrated designer does not only solve more kinds of problems. The designer studies the relationship between people, technology, space, and time. We make this relationship visible through research and prototypes. Then we study how it changes both people’s experience and the performance of the system.”</p>
+          <p>This answer is still not perfect. I am still learning what it means to be a designer. But it is clearer than saying that engineers focus on energy while designers focus on people.</p>
+        </div>
+      </section>
+
+      <section class="closing">
+        <p class="reveal">I cannot say that design is always important. But when a system works and people still cannot live well with it, <mark>a good designer is needed.</mark></p>
+      </section>
+    </main>
+
+    <footer>
+      <span>Design reflection</span>
+      <span>Website visuals generated by AI.</span>
+    </footer>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll('.reveal');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      items.forEach((item) => item.classList.add('is-visible'));
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+      items.forEach((item) => observer.observe(item));
+    }
+  </script>
+</body>
+</html>
