@@ -58,11 +58,11 @@
 
     .hero-copy {
       display: grid;
-      grid-template-columns: 1.6fr .8fr;
-      gap: 44px;
+      grid-template-columns: 1.35fr .85fr;
+      gap: 28px;
       padding-top: 58px;
-      padding-bottom: 44px;
-      align-items: end;
+      padding-bottom: 32px;
+      align-items: center;
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -71,18 +71,26 @@
       margin-bottom: 0;
       color: var(--blue);
       font-family: "Arial Narrow", Impact, sans-serif;
-      font-size: clamp(62px, 8.4vw, 112px);
+      font-size: clamp(62px, 7.2vw, 96px);
       line-height: .88;
       letter-spacing: -.045em;
       text-transform: uppercase;
     }
 
-    .hero-intro {
-      margin-bottom: 4px;
-      padding-top: 18px;
-      border-top: 4px solid var(--blue);
-      font-size: 20px;
-      line-height: 1.4;
+    .hero-illustration {
+      margin: 0;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 250px;
+    }
+
+    .hero-illustration img {
+      display: block;
+      width: 100%;
+      max-height: 310px;
+      object-fit: contain;
     }
 
     .hero-image {
@@ -226,8 +234,10 @@
     </header>
 
     <section class="hero-copy wrap">
-      <h1>Who does the green building assume?</h1>
-      <p class="hero-intro">Inclusive design starts by asking whose body, abilities, and context are treated as normal.</p>
+      <h1>Who does my project assume?</h1>
+      <figure class="hero-illustration">
+        <img src="assets/blue-architecture-illustration.png" alt="Blue line illustration of an inclusive green building with a step-free entrance" />
+      </figure>
     </section>
 
     <figure class="hero-image">
