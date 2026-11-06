@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VLD4 Inclusive Green Building Reflection</title>
+  <style>
+    :root {
+      --paper: #f7f7f2;
+      --ink: #15171a;
+      --blue: #2147e7;
+      --cyan: #23c8e3;
+      --soft-blue: #dfe6ff;
+      --line: #b9bcb7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #dfe2e3;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 40px));
+      margin: 30px auto;
+      background: var(--paper);
+      box-shadow: 0 18px 52px rgba(28, 42, 58, .16);
+    }
+
+    .wrap { padding-inline: 62px; }
+
+    header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      color: var(--blue);
+      font-family: "Arial Narrow", Impact, sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    nav {
+      display: flex;
+      gap: 26px;
+      color: #404449;
+      font-size: 13px;
+    }
+
+    .hero-copy {
+      display: grid;
+      grid-template-columns: 1.6fr .8fr;
+      gap: 44px;
+      padding-top: 58px;
+      padding-bottom: 44px;
+      align-items: end;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 0;
+      color: var(--blue);
+      font-family: "Arial Narrow", Impact, sans-serif;
+      font-size: clamp(62px, 8.4vw, 112px);
+      line-height: .88;
+      letter-spacing: -.045em;
+      text-transform: uppercase;
+    }
+
+    .hero-intro {
+      margin-bottom: 4px;
+      padding-top: 18px;
+      border-top: 4px solid var(--blue);
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .hero-image {
+      height: 340px;
+      overflow: hidden;
+      background: var(--cyan);
+      border-block: 1px solid var(--blue);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: 50% 27%;
+      filter: saturate(.96) contrast(1.02);
+    }
+
+    .image-caption {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding-top: 12px;
+      padding-bottom: 52px;
+      color: #4d5157;
+      font-size: 12px;
+    }
+
+    .image-caption span:last-child { text-align: right; }
+
+    .section {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 58px;
+      padding-block: 58px;
+      border-top: 1px solid var(--ink);
+    }
+
+    .section-number {
+      color: var(--blue);
+      font-family: "Arial Narrow", Impact, sans-serif;
+      font-size: 72px;
+      font-weight: 900;
+      line-height: .9;
+      letter-spacing: -.05em;
+    }
+
+    .section h2 {
+      margin-bottom: 22px;
+      color: var(--blue);
+      font-family: "Arial Narrow", Impact, sans-serif;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+    }
+
+    .section p {
+      max-width: 690px;
+      margin-bottom: 18px;
+      font-size: 17px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .pull-quote {
+      margin: 10px 0 28px;
+      padding: 24px 28px 25px;
+      background: var(--soft-blue);
+      border-left: 8px solid var(--blue);
+      color: #1733a3;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.25;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 26px;
+      margin-top: 28px;
+    }
+
+    .principle {
+      min-height: 170px;
+      padding: 24px;
+      background: var(--soft-blue);
+      border-left: 8px solid var(--blue);
+    }
+
+    .principle h3 {
+      margin-bottom: 12px;
+      color: #102a9a;
+      font-size: 22px;
+    }
+
+    .principle p {
+      margin-bottom: 0;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-block: 34px 38px;
+      border-top: 1px solid var(--ink);
+      color: #575b60;
+      font-size: 12px;
+    }
+
+    footer strong { color: var(--blue); }
+
+    @media (max-width: 760px) {
+      .page { width: 100%; margin: 0; }
+      .wrap { padding-inline: 22px; }
+      nav { display: none; }
+      .hero-copy, .section, .principles { grid-template-columns: 1fr; }
+      .hero-copy { gap: 26px; padding-top: 36px; }
+      h1 { font-size: 58px; }
+      .hero-image { height: 300px; }
+      .section { gap: 22px; padding-block: 42px; }
+      .section-number { font-size: 54px; }
+      .section h2 { font-size: 36px; }
+      .image-caption, footer { grid-template-columns: 1fr; display: grid; }
+      .image-caption span:last-child { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="wrap">
+      <div class="brand">VLD4</div>
+      <nav aria-label="Page sections">
+        <span>Default person</span>
+        <span>Exclusion</span>
+        <span>Redesign</span>
+        <span>Reflection</span>
+      </nav>
+    </header>
+
+    <section class="hero-copy wrap">
+      <h1>Who does the green building assume?</h1>
+      <p class="hero-intro">Inclusive design starts by asking whose body, abilities, and context are treated as normal.</p>
+    </section>
+
+    <figure class="hero-image">
+      <img src="assets/green-building-study.png" alt="Accessible green building study with a step-free route and an inclusive environmental control" />
+    </figure>
+    <div class="image-caption wrap">
+      <span>Inclusive Green Building Reflection</span>
+      <span>Comfort, access, control, and energy use</span>
+    </div>
+
+    <div class="wrap">
+      <section class="section">
+        <div class="section-number">#01</div>
+        <div>
+          <h2>The default person</h2>
+          <p>In my green-building project, I first focused on energy performance, shared indoor comfort, and the movement of people through the building. Without noticing it, I imagined a default user who could walk easily between rooms, use stairs when needed, read signs quickly, and understand the campus layout. I also assumed that this person could accept a standard indoor temperature or simply move to another space when the room felt too warm or too cold.</p>
+          <p>This default person was close to me. They were a student who was physically mobile, familiar with digital systems, comfortable using an app, and confident enough to ask staff for help. Because these actions feel easy to me, I treated them as normal. The design therefore placed too much responsibility on the user. It expected people to adapt their route, their body, and their schedule to the building.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-number">#02</div>
+        <div>
+          <h2>Who is left out?</h2>
+          <div class="pull-quote">A sustainable building is not inclusive if comfort and access depend on one type of body.</div>
+          <p>The person most likely to be excluded is a student with limited mobility and strong sensitivity to heat. They may use a wheelchair, walking aid, or move slowly because of pain or fatigue. When a room becomes uncomfortable, they cannot always change location quickly. A route to another space may include steps, heavy doors, long distances, or unclear signs. Even when a step-free route exists, it may be hidden or much longer than the main route.</p>
+          <p>Environmental controls can create another barrier. A thermostat may be mounted too high, locked for staff, or controlled only through a phone application. The user may not know whether the system received their request or how long the change will take. The problem is therefore not the person's body. The problem is a design that offers too little choice, feedback, and control.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-number">#03</div>
+        <div>
+          <h2>Redesigning the system</h2>
+          <p>I would redesign the building around the excluded user. First, every main destination should have a clearly marked, step-free route. The route should not feel like a secondary entrance. Signs should show distance, slope, lift access, and the comfort conditions of nearby spaces. This information helps a person choose a route before they become tired or uncomfortable.</p>
+          <p>Second, important controls should be available at an accessible height. The system should include physical controls, not only an application or a staff request. Buttons need clear labels, strong contrast, and simple feedback that shows the selected temperature, the current room condition, and the expected response. A user should be able to understand what happened without technical knowledge.</p>
+          <p>Third, the system should allow small manual adjustments while still explaining energy use. Instead of telling users that comfort is wasteful, it can show how a short local change affects the room and the building. This makes sustainability a shared decision rather than a fixed rule. People can protect their health and comfort while understanding the environmental effect of their choice.</p>
+
+          <div class="principles">
+            <article class="principle">
+              <h3>Access before adaptation</h3>
+              <p>The main route, entrance, and controls should work for different bodies from the beginning.</p>
+            </article>
+            <article class="principle">
+              <h3>Clear control</h3>
+              <p>Users need simple choices, visible feedback, and more than one way to interact.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-number">#04</div>
+        <div>
+          <h2>What I learned</h2>
+          <p>Inclusion is not an extra feature added after the main system is finished. It begins by questioning who is treated as normal and who is expected to work harder. A building can meet environmental targets and still exclude people if it gives them no comfortable route, no understandable information, or no direct control.</p>
+          <p>Designing for the person who was excluded can improve the experience for everyone. Step-free routes also help people carrying equipment, recovering from injury, or moving with children. Clear physical controls support visitors, users with limited digital access, and anyone whose phone has no battery. Simple feedback reduces uncertainty for all users. The goal is not to create a special version of the building. The goal is to make the main system flexible enough for different bodies, abilities, and situations.</p>
+        </div>
+      </section>
+
+      <footer>
+        <span><strong>VLD4</strong> Inclusive Design Reflection</span>
+        <span>Website generated by AI.</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
